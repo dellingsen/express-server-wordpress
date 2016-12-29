@@ -1,0 +1,49 @@
+<div class="container-fluid text-left" ng-controller="PostCtrl">
+
+    <div ng-show="showList && postList != null">
+       <h3>Wordpress All Posts</h3>
+
+        <p>Found {{ postSize }} Wordpress Posts </p>
+
+        <div ng-repeat="post in postList">
+		    <a ng-click="showPostDetails(post.id)" href="#"><h5>{{ post.title }}</h5></a>
+            Name: {{ post.name }} <br>
+            Author: {{ post.author }} <br>
+            Type: {{ post.type }} <br>
+            Status: {{ post.status }} <br>
+            Post Date: {{ post.date }} <br>
+            Last modified: {{ post.modified }} <br><br>
+        </div>
+    </div>
+	
+    <div ng-show="showDetail">
+       <h3><a ng-click="showPostList()" href="#">Back to All Posts</a> -> Post Details</h3>
+
+        <form name="postForm" validate>
+		
+			<input type="button" value="Cancel" ng-click="showPostList()" /> &nbsp;&nbsp;
+			<input type="button" value="Save" ng-click="updatePost(detailPost.id)" ng-disabled="postForm.title.$dirty &&
+																				   postForm.title.$invalid"/>
+			<br/>
+			<br/>
+			<p>Title:</p>
+			<input type="text" name="title" ng-model="detailPost.title" required value="{{ detailPost.title }}" size="50"/> <br>
+			<span style="color:red" ng-show="postForm.title.$dirty && postForm.title.$invalid">
+				<span ng-show="postForm.title.$error.required">Post title is required.</span>
+			</span>
+			<p>Content:</p>
+			<textarea name="content" ng-model="detailPost.content" required rows="30" cols="80">{{ detailPost.content }}</textarea> <br>
+			<span style="color:red" ng-show="postForm.content.$dirty && postForm.content.$invalid">
+				<span ng-show="postForm.content.$error.required">Post content is required.</span>
+			</span>
+			
+		</form>
+        <p>form = {{postForm}}</p>
+
+	</div>
+
+    <div ng-show="errorMsg != null">
+        {{ errorMsg }}
+    </div>
+
+</div>
